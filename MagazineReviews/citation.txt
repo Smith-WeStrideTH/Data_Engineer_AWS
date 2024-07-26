@@ -1,0 +1,41 @@
+#########################################################################
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid":"PublicReadGetObject",
+            "Effect":"Allow",
+            "Principal":"*",
+            "Action": "s3:GetObject",
+            "Resource":"arn:aws:s3:::handson-red-red/*"
+        },
+       {
+            "Sid":"PubliclistBucket",
+            "Effect":"Allow",
+            "Principal":"*",
+            "Action": "s3:ListBucket",
+            "Resource":"arn:aws:s3:::handson-red-red"
+        }
+        ]
+}
+#########################################################################
+SELECT * FROM metadata LIMIT 10;
+
+SELECT * FROM reviews LIMIT 10;
+
+#########################################################################
+
+SELECT 
+    m.brand,
+    AVG(r.overall) AS avg_review_score
+FROM 
+    reviews r
+JOIN
+    metadata m ON r.asin = m.asin
+GROUP BY
+    m.brand
+ORDER BY
+    avg_review_score DESC;
+
+
+
